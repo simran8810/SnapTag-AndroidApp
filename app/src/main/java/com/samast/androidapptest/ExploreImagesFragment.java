@@ -13,6 +13,7 @@ import android.widget.GridView;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.StringTokenizer;
 
 /**
  * Created by ht on 28/6/15.
@@ -45,9 +46,6 @@ public class ExploreImagesFragment extends Fragment {
 
         gridView = (GridView) view.findViewById(R.id.gridView);
         customGridAdapter = new GridViewAdapter(getActivity(), R.layout.row_grid, getData());
-        Log.e("xxx", customGridAdapter.toString());
-        Log.e("xxx",gridView.toString());
-
         gridView.setAdapter(customGridAdapter);
 
         return view;
@@ -63,13 +61,17 @@ public class ExploreImagesFragment extends Fragment {
 
         // bimatp factory
         BitmapFactory.Options options = new BitmapFactory.Options();
+        String imageName, finalImageName;
 
         for (int i = 0; i < imageFiles.length; i++) {
             // downsizing image as it throws OutOfMemory Exception for larger
             // images
             options.inSampleSize = 8;
+            imageName = imageFiles[i].getName();
+            finalImageName = imageName.substring(0, imageName.lastIndexOf('.'));
+
             Bitmap bitmap = BitmapFactory.decodeFile(imageFiles[i].getPath(),options);
-            imageItems.add(new ImageItem(bitmap, "Image#" + i));
+            imageItems.add(new ImageItem(bitmap, finalImageName));
         }
 
         return imageItems;}

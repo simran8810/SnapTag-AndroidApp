@@ -45,6 +45,8 @@ public class HomeScreen extends AppCompatActivity {
     private Button btnCapturePicture, btnExplorePictures;
     private TextView txtUsername;
 
+    private GPSTracker gps;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -94,6 +96,13 @@ public class HomeScreen extends AppCompatActivity {
      */
 
     @Override
+    protected void onResume(){
+        super.onResume();
+        txtUsername.setText("Hi "+preferences.getString(getResources().getString(R.string.userName),
+                "Username"));
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
         getMenuInflater().inflate(R.menu.menu_splashscreen, menu);
@@ -133,8 +142,7 @@ public class HomeScreen extends AppCompatActivity {
         if((explorefrag != null && explorefrag.isVisible()) || (savefrag != null && savefrag.isVisible())
                 || (changename != null && changename.isVisible())) {
             getFragmentManager().popBackStack();
-            txtUsername.setText("Hi "+preferences.getString(getResources().getString(R.string.userName),
-                    "Username"));
+
             //changeDrawerUpIndicator(true);
             //super.onBackPressed();
         }
@@ -287,10 +295,32 @@ public class HomeScreen extends AppCompatActivity {
         // Create a media file name
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss",
                 Locale.getDefault()).format(new Date());
+
+        String latlong = "Nolocation";
+
+        // create class object
+        gps = new GPSTracker(this);
+
+        // check if GPS enabled
+        if(gps.canGetLocation()){
+
+            double latitude = gps.getLatitude();
+            double longitude = gps.getLongitude();
+            latlong = latitude + "," + longitude;
+
+
+        }else{
+            // can't get location
+            // GPS or Network is not enabled
+            // Ask user to enable GPS/network in settings
+            gps.showSettingsAlert();
+        }
+
+
         File mediaFile;
         if (type == MEDIA_TYPE_IMAGE) {
             mediaFile = new File(mediaStorageDir.getPath() + File.separator
-                    + "IMG_" + timeStamp + ".jpg");
+                    + "Location-" + latlong + ".jpg");
 
         Log.e("full path",mediaFile.toString());
 

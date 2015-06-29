@@ -11,10 +11,10 @@ tools:context=".MainActivity" >
         android:layout_margin="5dp"
         android:columnWidth="100dp"
         android:gravity="center"
-        android:numColumns="auto_fit"
         android:verticalSpacing="5dp"
         android:drawSelectorOnTop="true"
-        android:stretchMode="columnWidth" >
+        android:stretchMode="columnWidth"
+        android:numColumns="2">
     </GridView>
 
 </RelativeLayout>

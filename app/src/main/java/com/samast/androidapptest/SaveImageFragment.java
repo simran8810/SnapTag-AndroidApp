@@ -75,7 +75,7 @@ public class SaveImageFragment extends Fragment {
             double longitude = gps.getLongitude();
             latlong.setText("(Lat, Lon): ("+latitude + ", " + longitude+")");
 
-            Log.e("xxxx", latitude + "   " + longitude);
+
         }else{
             // can't get location
             // GPS or Network is not enabled
@@ -97,6 +97,7 @@ public class SaveImageFragment extends Fragment {
             // downsizing image as it throws OutOfMemory Exception for larger images
             options.inSampleSize = 8;
             final Bitmap bitmap = BitmapFactory.decodeFile(fileUri, options);
+
 
             imgPreview.setImageBitmap(bitmap);
         } catch (NullPointerException e) {
