@@ -1,6 +1,7 @@
 package com.samast.androidapptest;
 
 import android.app.Fragment;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.location.LocationManager;
 import android.os.Bundle;
@@ -49,7 +50,9 @@ public class ChangeNameFragment extends Fragment {
                 editor.putString(getResources().getString(R.string.userName),
                         String.valueOf(newName.getText()));
                 editor.apply();
-                getFragmentManager().popBackStack();
+                Intent intent = getActivity().getIntent();
+                getActivity().finish();
+                startActivity(intent);
 
 
             }

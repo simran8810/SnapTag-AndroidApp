@@ -9,9 +9,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * Created by ht on 28/6/15.
@@ -21,6 +23,7 @@ public class SaveImageFragment extends Fragment {
     private View view;
     private ImageView imgPreview;
     private ImageButton cancelImage, submitImage;
+    private EditText caption;
     private TextView latlong;
     private static Uri imageFileUri; // file uri
     private static String fileUri;
@@ -41,6 +44,7 @@ public class SaveImageFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         view = inflater.inflate(R.layout.fragment_save_image, container, false);
+        caption = (EditText) view.findViewById(R.id.txtPreview);
         imgPreview = (ImageView) view.findViewById(R.id.imgPreview);
         latlong = (TextView) view.findViewById(R.id.txtlatlong);
         fileUri = getArguments().getString("fileUri");
@@ -51,7 +55,15 @@ public class SaveImageFragment extends Fragment {
         submitImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getFragmentManager().popBackStack();
+                String empty = "";
+                if (String.valueOf(caption.getText()).equals(empty)){
+                    Toast.makeText(getActivity().getApplicationContext(),
+                            "please enter image caption", Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    getFragmentManager().popBackStack();
+                }
+
             }
         });
 
@@ -59,6 +71,8 @@ public class SaveImageFragment extends Fragment {
         cancelImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Toast.makeText(getActivity().getApplicationContext(),
+                        "Image not saved", Toast.LENGTH_SHORT).show();
                 getFragmentManager().popBackStack();
 
             }
@@ -73,7 +87,7 @@ public class SaveImageFragment extends Fragment {
 
             double latitude = gps.getLatitude();
             double longitude = gps.getLongitude();
-            latlong.setText("(Lat, Lon): ("+latitude + ", " + longitude+")");
+            latlong.setText("Location:" + latitude + ", " + longitude);
 
 
         }else{
