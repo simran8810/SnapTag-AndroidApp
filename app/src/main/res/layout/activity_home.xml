@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/mainContent">
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/hiUser"
+        android:gravity="center_horizontal"
+        android:paddingTop="60dp"
+        android:text="@string/userName"
+        android:textStyle="italic"
+        android:textSize="20dp"
+        android:layout_alignParentTop="true"/>
+
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_centerVertical="true">
+
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnCapturePicture"
+            android:text="@string/Camera"
+            android:textSize="14sp"
+            android:textColor="@color/black"
+            android:layout_gravity="center_vertical"
+            android:textStyle="bold"
+            android:background="@color/accent"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"/>
+
+
+
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/explorePictures"
+            android:text="@string/Explore"
+            android:textSize="14sp"
+            android:textColor="@color/black"
+            android:layout_gravity="center_vertical"
+            android:textStyle="bold"
+            android:background="@color/accent"
+            android:layout_marginTop="60dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"/>
+    </LinearLayout>
+
+
+
+</RelativeLayout>

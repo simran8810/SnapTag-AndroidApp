@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">SnapTag</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="isLoggedIn">isLoggedIn</string>
+    <string name="login">LOGIN</string>
+    <string name="userName">Name</string>
+    <string name="userNumber">+91</string>
+    <string name="logout">Logout</string>
+    <string name="Camera">New Picture</string>
+    <string name="Explore">Explore Pictures</string>
+    <string name="Username">Username</string>
+    <string name="action_changename">Change Name</string>
+    <string name="newname">New Name:</string>
+
+
+</resources>
