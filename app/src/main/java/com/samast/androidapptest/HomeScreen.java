@@ -3,6 +3,7 @@ package com.samast.androidapptest;
 
 import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -36,7 +37,10 @@ public class HomeScreen extends AppCompatActivity {
     private static final int CAMERA_CAPTURE_IMAGE_REQUEST_CODE = 100;
     public static final int MEDIA_TYPE_IMAGE = 1;
 
+
+    public static Context context;
     private static final String IMAGE_DIRECTORY_NAME = "AppImages";
+    private static String latlong = "Nolocation";
     private Uri fileUri; // file url to store image/video
 
     private static SharedPreferences preferences;
@@ -45,13 +49,14 @@ public class HomeScreen extends AppCompatActivity {
     private Button btnCapturePicture, btnExplorePictures;
     private TextView txtUsername;
 
-    private GPSTracker gps;
+    private static GPSTracker gps;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        context = getApplicationContext();
         preferences = getApplicationContext().getSharedPreferences("user_info", 0);
         editor = preferences.edit();
 
@@ -64,8 +69,21 @@ public class HomeScreen extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                // capture picture
-                captureImage();
+
+                // create GPSTracker class object
+                gps = new GPSTracker(HomeScreen.this);
+
+                if(gps.canGetLocation()){
+                    double latitude = gps.getLatitude();
+                    double longitude = gps.getLongitude();
+                    latlong = latitude + "," + longitude;
+                    // capture picture
+                    captureImage();
+                }
+                else{
+                    gps.showSettingsAlert();
+                }
+
             }
         });
 
@@ -291,31 +309,6 @@ public class HomeScreen extends AppCompatActivity {
                 return null;
             }
         }
-
-        // Create a media file name
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss",
-                Locale.getDefault()).format(new Date());
-
-        String latlong = "Nolocation";
-
-        // create class object
-        gps = new GPSTracker(this);
-
-        // check if GPS enabled
-        if(gps.canGetLocation()){
-
-            double latitude = gps.getLatitude();
-            double longitude = gps.getLongitude();
-            latlong = latitude + "," + longitude;
-
-
-        }else{
-            // can't get location
-            // GPS or Network is not enabled
-            // Ask user to enable GPS/network in settings
-            gps.showSettingsAlert();
-        }
-
 
         File mediaFile;
         if (type == MEDIA_TYPE_IMAGE) {
